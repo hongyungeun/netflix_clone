@@ -146,6 +146,37 @@ img {
   float: right;
   cursor: pointer;
 }
+.movie_page_poster_wrap {
+  position: relative;
+}
+.movie_page_poster_desc {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.438);
+}
+.movie_page_poster_desc p {
+  color: white;
+  font-size: 20px;
+}
+.movie_page_badge {
+  margin-right: 10px;
+}
+.movie_page_view_wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.moive_pagination {
+  color: white;
+  font-size: 20px;
+}
+.moive_pagination span {
+  margin-right: 20px;
+  cursor: pointer;
+}
 @media screen and (max-width : 1330px) {
   .movie_recommend_card {
     grid-template-columns: 1fr 1fr 1fr;
