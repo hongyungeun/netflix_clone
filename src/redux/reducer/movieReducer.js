@@ -1,5 +1,5 @@
 let initialState = {
-  popularMovies:{},
+  popularMovies:{ },
   topRatedMovies:{},
   upComingMovies:{},
   movieGenre:[],
@@ -30,7 +30,7 @@ function movieReducer(state=initialState,action) {
     case 'GET_MOVIES_FAIL':
       return{
         ...state,
-        loding:false
+        loding:false,
         
       }
     case 'GET_DETAIL_MOVIE_SUCCESS':

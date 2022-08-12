@@ -6,54 +6,59 @@ import { useNavigate } from 'react-router-dom'
 import api from '../redux/api'
 const API_KEY=process.env.REACT_APP_API_KEY
 function Movies() {
-  const [totalPage,setTotalPage] = useState()
-  const [currentPage,setCurrentPage] = useState()
-  const [mainData, setMainData] = useState('')
+  let [thisLoading,setThisLoading] = useState(true)
+  const [totalPage,setTotalPage] = useState('')
+  const [currentPage,setCurrentPage] = useState(1)
+  const [mainData, setMainData] = useState()
   const navigate = useNavigate()
   let curpage = (a) => {
     setCurrentPage(a) 
   };
   const pagination = ()=>{
-    for (let i = 1; i <= 10; i++) {
-      
-      
-        
-      
-      
+    for (let i = 1; i <= popularMovies.total_pages; i++) {
+
     }
   }
   let dispatch = useDispatch()
   let {popularMovies,topRatedMovies,upComingMovies,movieGenre,loading} =useSelector(state=>state.movie)
+  let movieList = useSelector(state=>state.movieList)
   let defaultUrl =`https://www.themoviedb.org/t/p/w300_and_h450_bestv2`
-  async function page(){
-    let baseUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=${currentPage}`
-    let res = await fetch(baseUrl)
-    let data = await res.json()
-    setMainData(data)
-  }
+  // async function page(){
+  //   let baseUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=${currentPage}`
+  //   let res = await fetch(baseUrl)
+  //   let data = await res.json()
+  //   setMainData(data)
+  // }
   useEffect(()=>{
     dispatch(movieAction.getMovies())
-    setTotalPage(popularMovies.total_pages)
-    setCurrentPage(popularMovies.page)
-    navigate(`/movies/?q=${currentPage}`)
-    
-    page()
+    dispatch(movieAction.getMovieList(currentPage))
+    // setTotalPage(popularMovies.total_pages)
+    // setCurrentPage(popularMovies.page)
+    setMainData(popularMovies)
+    navigate(`/movies?page=${currentPage}`)
+    console.log(mainData)
+    // console.log(`useEffect안에서 실행 ${popularMovies.page}`)
+    setThisLoading(false)
   },[])
   useEffect(()=>{
-    navigate(`/movies/?q=${currentPage}`)
-    page()
     
+    navigate(`/movies?page=${currentPage}`)
+    // page()
+    // console.log(`currentpage 변화 ${currentPage}`)
+    setMainData(movieList)
+    setThisLoading(false)
   },[currentPage])
   
-  console.log(popularMovies)
-  console.log(mainData)
-  if(loading){
+  // console.log(popularMovies)
+  // console.log(popularMovies.page)
+  console.log(`useEffect바깥쪽에서 실행 ${popularMovies.page}`)
+  if(thisLoading){
     <p>로딩중</p>
   }else
   return (
     <>
       <div className='movie_page_view_wrap'>
-        {popularMovies.results.map(item=><><div className='movie_page_poster_wrap'>
+        {mainData.results.map(item=><><div className='movie_page_poster_wrap'>
           <img src={defaultUrl+item.poster_path} />
           <div className='movie_page_poster_desc'>
             <p>{item.title}</p>

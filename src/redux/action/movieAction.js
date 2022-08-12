@@ -56,6 +56,26 @@ function getDetailMovie (id){
   }
   
 }
+function getMovieList (currentPage){
+  
+  return async(dispatch)=>{
+    try {
+      const API_KEY=process.env.REACT_APP_API_KEY
+      let baseUrl = api.get(`/movie/popular?api_key=${API_KEY}&language=en-US&page=${currentPage}`) 
+      let res = await fetch(baseUrl)
+      let data = await res.json()
+      dispatch({
+        type:'GET_MOVIE_LIST',
+        payload : {
+          movieList : data.data
+        }
+      })
+
+    } catch (error) {
+      
+    }
+  }
+}
 export const movieAction = {
-  getMovies,getDetailMovie
+  getMovies,getDetailMovie,getMovieList
 }
