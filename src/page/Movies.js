@@ -46,7 +46,7 @@ function Movies() {
     console.log(`useEffect바깥쪽에서 실행 ${currentPage}`)
     console.log(`maindata ${mainData}`)
     
-  },[])
+  },[currentPage])
   
   if(thisLoading){
     <p>로딩중</p>
