@@ -5,7 +5,7 @@ import Home from './page/Home';
 import Movies from './page/Movies';
 import MovieDetail from './page/MovieDetail';
 import Navigate from './components/Navigate';
-
+import ErrorPage from './page/ErrorPage';
 //1. 총3개페이지 필요 /홈페이지 /무비페이지 /무비디테일페이지
 //2. 홈페이지에서 배너 볼수있음
 //3. 3가지종류의 영화를 볼수있음 (popular,top rated, upcoming)
@@ -27,6 +27,7 @@ function App() {
         <Route path='/' element={<Home />}/>
         <Route path='/movies' element={<Movies />}/>
         <Route path='/movies/:id' element={<MovieDetail />}/>
+        <Route path='/*' element={<ErrorPage />} />
       </Routes>
     </div>
   );

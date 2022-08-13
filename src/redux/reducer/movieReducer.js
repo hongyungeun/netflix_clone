@@ -8,7 +8,11 @@ let initialState = {
   movieReview:[],
   movieRecommend:[],
   movieVideo:[],
-  detailLoding:true
+  detailLoding:true,
+  movieList:{
+    page:0,
+    results:[]
+  }
 
 }
 
@@ -47,8 +51,15 @@ function movieReducer(state=initialState,action) {
         ...state,
         detailLoding:false
       }
+    case 'GET_MOVIE_LIST':
+    return{
+      ...state,
+      movieList : payload.movieList
+    }
+    
     default : return {...state}
   }
 }
+
 
 export default movieReducer

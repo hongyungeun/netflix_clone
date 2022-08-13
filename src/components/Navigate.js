@@ -22,7 +22,7 @@ function Navigate() {
               navbarScroll
             >
               <Link to='/' className='nav_item'>Home</Link>
-              <Link to='/movies' className='nav_item'>Movies</Link>
+              <Link to='/movies?page=1' className='nav_item'>Movies</Link>
             </Nav>
             <Form className="d-flex">
               <Form.Control

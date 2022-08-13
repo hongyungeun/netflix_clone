@@ -1,6 +1,6 @@
 import api from '../api'
 const API_KEY=process.env.REACT_APP_API_KEY
-function getMovies(){
+function getMovies(currentPage){
   return async(dispatch)=>{
     try {
       dispatch({type:'GET_MOVIE_REQUEST'})
@@ -8,7 +8,8 @@ function getMovies(){
       const topRatedUrl = api.get(`/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`)
       const upComingUrl = api.get(`/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1`)
       const genreUrl = api.get(`/genre/movie/list?api_key=${API_KEY}&language=en-US`)
-      let [popularMovies,topRatedMovies,upComingMovies,movieGenre] = await Promise.all([popularMovieApi,topRatedUrl,upComingUrl,genreUrl])
+      const baseUrl = api.get(`/movie/popular?api_key=${API_KEY}&language=en-US&page=${currentPage}`) 
+      let [popularMovies,topRatedMovies,upComingMovies,movieGenre,movieList] = await Promise.all([popularMovieApi,topRatedUrl,upComingUrl,genreUrl,baseUrl])
       
       dispatch({
         type:"GET_MOVIES_SUCCESS",
@@ -17,6 +18,7 @@ function getMovies(){
           topRatedMovies:topRatedMovies.data,
           upComingMovies:upComingMovies.data,
           movieGenre:movieGenre.data.genres,
+          movieList:movieList.data,
           loading:false,
         }
       })
@@ -27,11 +29,11 @@ function getMovies(){
   }
 
 }
+let APIkey = process.env.REACT_APP_API_KEY;
 function getDetailMovie (id){
   return async(dispatch)=>{
     try{
       
-        let APIkey = process.env.REACT_APP_API_KEY;
         let thisUrl = api.get(`/movie/${id}?api_key=${APIkey}&language=en-US`)
         let movieReview = api.get(`/movie/${id}/reviews?api_key=${APIkey}&language=en-US&page=1`)
         let movieRecommend = api.get(`/movie/${id}/recommendations?api_key=${APIkey}&language=en-US&page=1`)
@@ -56,26 +58,26 @@ function getDetailMovie (id){
   }
   
 }
-function getMovieList (currentPage){
+// function getMovieList (currentPage){
   
-  return async(dispatch)=>{
-    try {
-      const API_KEY=process.env.REACT_APP_API_KEY
-      let baseUrl = api.get(`/movie/popular?api_key=${API_KEY}&language=en-US&page=${currentPage}`) 
-      let res = await fetch(baseUrl)
-      let data = await res.json()
-      dispatch({
-        type:'GET_MOVIE_LIST',
-        payload : {
-          movieList : data.data
-        }
-      })
-
-    } catch (error) {
+//   return async(dispatch)=>{
+//     try {
       
-    }
-  }
-}
+//       let baseUrl = api.get(`/movie/popular?api_key=${API_KEY}&language=en-US&page=1`) 
+//       let [movieList] = await Promise.all([baseUrl])
+//       dispatch({
+//         type:'GET_MOVIE_LIST',
+//         payload : {
+//           movieList:movieList.data
+//         }
+//       })
+
+//     } catch (error) {
+//       console.log('씨발뭔에러')
+//     }
+//   }
+// }
 export const movieAction = {
-  getMovies,getDetailMovie,getMovieList
+  getMovies,getDetailMovie,
+  // getMovieList
 }
