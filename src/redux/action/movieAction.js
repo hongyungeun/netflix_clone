@@ -58,25 +58,25 @@ function getDetailMovie (id){
   }
   
 }
-// function getMovieList (currentPage){
+function getMovieList (){
   
-//   return async(dispatch)=>{
-//     try {
+  return async(dispatch)=>{
+    try {
       
-//       let baseUrl = api.get(`/movie/popular?api_key=${API_KEY}&language=en-US&page=1`) 
-//       let [movieList] = await Promise.all([baseUrl])
-//       dispatch({
-//         type:'GET_MOVIE_LIST',
-//         payload : {
-//           movieList:movieList.data
-//         }
-//       })
+      let baseUrl = api.get(`/search/movie?api_key=${API_KEY}&language=en-US&page=1&include_adult=false`) 
+      let [movieList] = await Promise.all([baseUrl])
+      dispatch({
+        type:'GET_MOVIE_LIST',
+        payload : {
+          movieList:movieList.data
+        }
+      })
 
-//     } catch (error) {
-//       console.log('씨발뭔에러')
-//     }
-//   }
-// }
+    } catch (error) {
+      console.log('씨발뭔에러')
+    }
+  }
+}
 export const movieAction = {
   getMovies,getDetailMovie,
   // getMovieList

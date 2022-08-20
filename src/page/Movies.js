@@ -9,20 +9,23 @@ const API_KEY=process.env.REACT_APP_API_KEY
 function Movies() {
   const [prev,setPrev]= useState(1)
   const [next,setNext]= useState(10)
+
+  const [pageCurrent,setPageCurrent] = useState([])
+  const [totalResult,setTotalResult] = useState('')
+  const [totalPage,setTotalPage] = useState('')
+  const [startPage, setStartPage] = useState('')
+  const [endPage, setEndPage] = useState('')
+
   const [arr,setArr] = useState([])
   const [currentPage,setCurrentPage] = useState()
   const navigate = useNavigate()
   const [query,setQuery] = useSearchParams()
-  const arr2 = [];
   const pagination = ()=>{
-    
-    // for (let i = prev; i <= next; i++) {
-    //   // setArr((prev)=>[...prev,i])
-    //   setArr([arr.push(i)])
-    // }
-    for(let i=prev; i<= next; i++){
-      arr2.push(i)
+
+    for(let i=startPage; i<= endPage; i++){
+      pageCurrent.push(<span onClick={()=>{setCurrentPage(i); navigate(`/movies?page=${i}`)}}>{i}</span>)
     }
+    
   }
 
   
@@ -34,18 +37,22 @@ function Movies() {
     navigate(`/movies?page=${currentPage}`)
   }
   // useEffect(()=>{
-  //   pagination()
-  // },[])
-  useEffect(()=>{
-    pagination()
-  },[prev,next])
+  //   setTotalPage(movieList.total_page)
+  //   setTotalResult(movieList.total_results)
+  //   setStartPage(Math.floor(currentPage / 10 )*10+1)
+  //   setEndPage((Math.floor(currentPage / 10 )*10+1)+10 -1)
+  // },[startPage])
+
   useEffect(()=>{
     setCurrentPage(query.get('page'))
+    setTotalPage(movieList.total_page)
+    setTotalResult(movieList.total_results)
+    setStartPage(Math.floor(currentPage / 10 )*10+1)
+    setEndPage((Math.floor(currentPage / 10 )*10+1)+10 -1)
     dispatch(movieAction.getMovies(currentPage))
-    console.log(arr2)
-    
   },[currentPage])
-  
+  console.log(startPage)
+  console.log(endPage)
   return (
     <>
     {
@@ -65,27 +72,23 @@ function Movies() {
             
           </div>
             <p className='moive_pagination'>
-              {/* <span>1</span>
-              <span onClick={()=>{setCurrentPage(2) 
-                navigate(`/movies?page=${2}`)}}>2</span>
-              <span>3</span> */}
               <span onClick={()=>{
-                if(prev === 1){
+                if(startPage === 1){
 
                 }else {
-                  setPrev(prev-10); setNext(next-10)
+                  setStartPage(startPage-10);
+                  navigate(`/movies?page=${endPage}`)
                 }
-                }}>&lt;</span>
+              }}>&lt;</span>
               { pagination()}
-              { arr2.map((i)=><><span onClick={()=>{setCurrentPage(i) 
-                navigate(`/movies?page=${i}`)}}>{i}</span></>)}
               <span onClick={()=>{
-                if(next > movieList.total_page){
+                if(endPage > totalPage){
 
                 }else {
-                  setPrev(prev+10); setNext(next+10)
+                  setStartPage(startPage+10)
+                  navigate(`/movies?page=${startPage}`)
                 }
-                }}>&gt;</span>
+              }}>&gt;</span>
             </p>
         </>)
     }
