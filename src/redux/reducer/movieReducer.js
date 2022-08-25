@@ -10,7 +10,7 @@ const initialState = {
   movieVideo:[],
   detailLoding:true,
   movieList:{
-    page:'1',
+    page:1,
     results:[]
   }
 
