@@ -58,26 +58,27 @@ function getDetailMovie (id){
   }
   
 }
-function getMovieList (){
+function getMovieList (page,search){
   
   return async(dispatch)=>{
     try {
-      
-      let baseUrl = api.get(`/search/movie?api_key=${API_KEY}&language=en-US&page=1&include_adult=false`) 
+      dispatch({type:'GET_MOVIELIST_REQUEST'})
+      let baseUrl = api.get(`/search/movie?api_key=${API_KEY}&language=en-US&page=${page}&include_adult=false&query=${search}`) 
       let [movieList] = await Promise.all([baseUrl])
       dispatch({
         type:'GET_MOVIE_LIST',
         payload : {
-          movieList:movieList.data
+          movieList:movieList.data,
+          movieListLoding:false
         }
       })
 
     } catch (error) {
-      console.log('씨발뭔에러')
+      dispatch({type:'GET_MOVIELIST_FALE'})
     }
   }
 }
 export const movieAction = {
   getMovies,getDetailMovie,
-  // getMovieList
+  getMovieList
 }

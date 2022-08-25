@@ -1,12 +1,22 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import {Link} from 'react-router-dom'
+import {Link,useNavigate} from 'react-router-dom'
 
 function Navigate() {
+  
+  const navigate = useNavigate()
+  const [query,setQuery] = useState('')
+  const searchQuery = ()=>{
+    navigate(`/searchPage?q=${query}`)
+  }
+  const serachOnChange =(e)=>{
+    setQuery(e.target.value)
+    
+  }
   return (
     <div className='navbar_wrap'>
       <Navbar bg="dark" variant='dark' expand="lg">
@@ -26,12 +36,15 @@ function Navigate() {
             </Nav>
             <Form className="d-flex">
               <Form.Control
-                type="search"
+                // type="search"
                 placeholder="Search"
                 className="me-2"
-                aria-label="Search"
+                // aria-label="Search"
+                onChange={serachOnChange}
               />
-              <Button variant="outline-danger">Search</Button>
+              
+              <Button onClick={searchQuery} variant="outline-danger">Search</Button>
+              
             </Form>
           </Navbar.Collapse>
         </Container>

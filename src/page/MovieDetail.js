@@ -46,10 +46,7 @@ function MovieDetail() {
   },[id])
   
   
-  console.log('씨발',thisUrl)
-  console.log('씨발 리뷰',movieReview)
-  console.log('씨발 영화추천',movieRecommend)
-  console.log('씨발 영화 예고편',movieVideo)
+
   let defaultUrl =`https://www.themoviedb.org/t/p/w300_and_h450_bestv2`
   if(detailLoding){
     <ClipLoader className='loading' color={'#fff'}  size={150} />
