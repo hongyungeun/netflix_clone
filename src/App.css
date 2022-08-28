@@ -185,7 +185,16 @@ img {
   font-size: 20px;
   gap: 15px;
 }
-
+.nosearch_page {
+  color: white;
+  text-align: center;
+}
+.nosearch_wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 100px;
+}
 @media screen and (max-width : 1330px) {
   .movie_recommend_card {
     grid-template-columns: 1fr 1fr 1fr;

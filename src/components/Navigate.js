@@ -17,6 +17,11 @@ function Navigate() {
     setQuery(e.target.value)
     
   }
+  const keyDown = (e)=>{
+    if(e.key === 'Enter'){
+      searchQuery()
+    }
+  }
   return (
     <div className='navbar_wrap'>
       <Navbar bg="dark" variant='dark' expand="lg">
@@ -34,18 +39,19 @@ function Navigate() {
               <Link to='/' className='nav_item'>Home</Link>
               <Link to='/movies?page=1' className='nav_item'>Movies</Link>
             </Nav>
-            <Form className="d-flex">
+            
               <Form.Control
-                // type="search"
+                type="search"
                 placeholder="Search"
                 className="me-2"
-                // aria-label="Search"
+                aria-label="Search"
                 onChange={serachOnChange}
+                onKeyDown={keyDown}
               />
               
               <Button onClick={searchQuery} variant="outline-danger">Search</Button>
               
-            </Form>
+            
           </Navbar.Collapse>
         </Container>
       </Navbar>
