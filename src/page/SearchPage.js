@@ -34,8 +34,9 @@ function SearchPage() {
     let prevNum = startBlockPage-1;
     console.log('prevNum',prevNum)
     if(prevNum > 1){
-      dispatch(movieAction.getMovieList(query,prevNum))
-      navigate(`/searchPage?q=${query}&page=${prevNum}`)
+      dispatch(movieAction.getMovieList(prevNum,query.get('q')))
+      const keyword = query.get('q')
+      navigate(`/searchPage?q=${keyword}&page=${prevNum}`)
     }
     
   }
@@ -46,14 +47,16 @@ function SearchPage() {
     let nextNum = endBlockPage+1;
     console.log('nextNum',nextNum)
     if(nextNum<movieList.total_pages){
-      dispatch(movieAction.getMovieList(query,nextNum))
-      navigate(`/searchPage?q=${query}&page=${nextNum}`)
+      dispatch(movieAction.getMovieList(nextNum,query.get('q')))
+      const keyword = query.get('q')
+      navigate(`/searchPage?q=${keyword}&page=${nextNum}`)
     }
   }
 
   const onClickPage = (page)=>{
-  dispatch(movieAction.getMovieList(query,page))
-  navigate(`/searchPage?q=${query}&page=${page}`)
+  dispatch(movieAction.getMovieList(page,query.get('q')))
+  const keyword = query.get('q')
+  navigate(`/searchPage?q=${keyword}&page=${page}`)
   }
 
 
